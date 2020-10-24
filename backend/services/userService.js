@@ -9,7 +9,18 @@ module.exports = app =>{
     const save = (req, res) =>{
         const use = { ...req.body}
 
-        res.status(200).send(use)
+        if(req.params.id){
+            use.id = req.params.id
+        }
+
+        use.senha = encryptPassword(req.body.senha)
+
+        if(use.id){
+            
+        }else{
+
+        }
+        
     }
 
     return {save}
