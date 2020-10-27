@@ -6,6 +6,7 @@ const db = require('./config/db')
 app.db = db
 
 consign()
+    .then('./authentication')
     .then('./config/middleware.js')
     .then('./services')
     .then('./config/routes.js')
