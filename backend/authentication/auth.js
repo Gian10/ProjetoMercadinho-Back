@@ -1,7 +1,7 @@
 const {authSecret} = require('../.env')
 const jwt = require('jwt-simple')
 const bcrypt = require('bcrypt')
-const { select } = require('../config/db')
+const { select, as } = require('../config/db')
 
 module.exports = app =>{
 
@@ -28,5 +28,23 @@ module.exports = app =>{
         res.json({ ...playload, token: jwt.encode(playload, authSecret)})
     }
 
-    return {login}
+    const validateToken = async (req, res) =>{
+        const userData = req.body || null
+        try{
+            if(userData){
+                const token = jwt.decode(userData.token, authSecret)
+
+                if(new Date(token.exp * 1000) > new Date()){
+                    // token valido
+                    return res.send(true)
+                }
+            }
+
+        }catch(erro){
+
+        }
+        res.send(false)
+    }
+
+    return {login, validateToken}
 }
