@@ -26,4 +26,10 @@ module.exports = app =>{
     app.route('/product/:id')
         .get(app.services.productService.getByIdProduct)
         .delete(app.services.productService.deleteProduct)
+
+    app.route('/input')
+        .get(app.services.inputService.getInput)
+        .post(app.services.inputService.save)
+
+    
 }
