@@ -1,7 +1,6 @@
 const {authSecret} = require('../.env')
 const jwt = require('jwt-simple')
 const bcrypt = require('bcrypt')
-const { select, as } = require('../config/db')
 
 module.exports = app =>{
 
