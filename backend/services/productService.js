@@ -4,12 +4,12 @@ module.exports = app =>{
     const save = (req, res) =>{
         const product = { ...req.body}
 
-        if(req.params.id){
-            product.id = req.params.id
+        if(req.params.produto_id){
+            product.produto_id = req.params.produto_id
         }
 
-        if(product.id){
-            app.db('product').update(product).where({id: product.id})
+        if(product.produto_id){
+            app.db('product').update(product).where({produto_id: product.produto_id})
             .then(_ => res.status(201).send('produto atualizado'))
             .catch(erro => res.status(500).send('erro ao atualizar'))
         }else{
@@ -21,7 +21,8 @@ module.exports = app =>{
 
     const getProduct = (req, res) =>{
         app.db('product')
-        .select('id', 'nomeProduto', 'codigo', 'precoCusto', 'precoVenda', 'estoque')
+        .select('produto_id', 'nome_produto', 'codigo', 'preco_custo', 'preco_venda', 'estoque')
+        .orderBy('produto_id')
         .then(product => res.status(200).send(product))
         .catch(erro => res.status(500).send('erro ao buscar produto'))
 
@@ -29,14 +30,14 @@ module.exports = app =>{
 
     const getByIdProduct = (req, res) =>{
         app.db('product')
-        .select('id', 'nomeProduto', 'codigo', 'precoCusto', 'precoVenda', 'estoque')
-        .where({id: req.params.id})  
+        .select('produto_id', 'nome_produto', 'codigo', 'preco_custo', 'preco_venda', 'estoque')
+        .where({produto_id: req.params.produto_id})  
         .then(product => res.status(200).send(product))
         .catch(erro => res.status(500).send('erro ao buscar produto por id'))      
     }
 
     const deleteProduct = async (req, res) =>{
-        app.db('product').delete().where({id: req.params.id})
+        app.db('product').delete().where({produto_id: req.params.produto_id})
         .then(_ => res.status(200).send('produto deletado'))
         .catch(_ => res.status(500).send('erro ao deletar produto'))
     }
