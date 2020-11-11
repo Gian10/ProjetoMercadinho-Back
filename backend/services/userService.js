@@ -17,12 +17,12 @@ module.exports = app =>{
 
         if(user.id){
            app.db('users').update(user).where({id: user.id})
-           .then(_ => res.status(201).send('Atualizado'))
-           .catch(erro => res.status(500).send('erro ao atualizar'))
+            .then(_ => res.status(201).send())
+            .catch(erro => res.status(500).send('erro ao atualizar'))
 
         }else{
             app.db('users').insert(user)
-            .then(_ => res.status(201).send('salvo'))
+            .then(_ => res.status(201).send())
             .catch(erro => res.status(500).send('erro ao salvar'))
         }
         

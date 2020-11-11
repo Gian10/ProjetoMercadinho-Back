@@ -8,6 +8,9 @@ module.exports = app =>{
 
         const user = await app.db('users').select('id','nome', 'senha').where({nome: req.body.nome}).first()
         
+        if(!user){
+            return res.status(500).send('Nome Inválido')
+        }
         const isEqual = bcrypt.compareSync(req.body.senha, user.senha)
         
         if(!isEqual){
@@ -21,7 +24,9 @@ module.exports = app =>{
             id: user.id,
             name: user.nome,
             iat: dateNowSeconds,
-            exp: dateNowSeconds + (60 * 60 * 24 * 3)
+            //exp: dateNowSeconds + (60 * 60 * 24 * 3)
+            // 10 min * 60 segundos * mil milisecundos
+            exp: dateNowSeconds + (10 * 60 * 1000)
         }
 
         res.json({ ...playload, token: jwt.encode(playload, authSecret)})
@@ -32,10 +37,12 @@ module.exports = app =>{
         try{
             if(userData){
                 const token = jwt.decode(userData.token, authSecret)
-
+               console.log(token.exp)
+                // zulu time
                 if(new Date(token.exp * 1000) > new Date()){
                     // token valido
                     return res.send(true)
+                    //return res.send(new Date(token.exp * 1000), new Date())
                 }
             }
 

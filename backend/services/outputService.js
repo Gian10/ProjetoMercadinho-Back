@@ -5,7 +5,7 @@ module.exports = app =>{
         const output = { ...req.body}
 
         app.db('output').insert(output)
-            .then(_ => res.status(201).send('saida salva'))
+            .then(_ => res.status(201).send())
             .catch(erro => res.status(500).send('erro ao salvar saida'))
     }
 
@@ -19,7 +19,7 @@ module.exports = app =>{
 
     const deleteOutput = (req, res) =>{
         app.db('output').delete().where({saida_id: req.params.saida_id})
-        .then(_ => res.status(200).send('saida deletada'))
+        .then(_ => res.status(200).send())
         .catch(_ => res.status(500).send('erro ao deletar saida'))
     }
 
