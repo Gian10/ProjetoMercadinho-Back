@@ -7,6 +7,7 @@ app.db = db
 
 consign()
     .include('./config/passport.js')
+    .then('./querys')
     .then('./authentication')
     .then('./config/middleware.js')
     .then('./services')

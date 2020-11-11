@@ -13,20 +13,23 @@ module.exports = app =>{
         .post(app.services.userService.save)
 
     app.route('/users')
+        .all(app.config.passport.authenticate())
         .get(app.services.userService.getUsers)
 
-    app.route('/user/:id')
+    app.route('/users/:id')
         .all(app.config.passport.authenticate())
         .put(app.services.userService.save)
         .get(app.services.userService.getById)
 
 
 // rotas de produtos
-    app.route('/product')
+    app.route('/products')
+        .all(app.config.passport.authenticate())
         .post(app.services.productService.save)
         .get(app.services.productService.getProduct)
 
-    app.route('/product/:produto_id')
+    app.route('/products/:produto_id')
+        .all(app.config.passport.authenticate())
         .get(app.services.productService.getByIdProduct)
         .put(app.services.productService.save)
         .delete(app.services.productService.deleteProduct)
@@ -34,19 +37,23 @@ module.exports = app =>{
 
 // rota de entrada de produtos
     app.route('/input')
+        .all(app.config.passport.authenticate())
         .get(app.services.inputService.getInput)
         .post(app.services.inputService.save)
 
     app.route('/input/:entrada_id')
+        .all(app.config.passport.authenticate())
         .delete(app.services.inputService.deleteInput)
 
 
 // rota de saída de produtos
     app.route('/output')
+        .all(app.config.passport.authenticate())
         .get(app.services.outputService.getOutput)
         .post(app.services.outputService.save)
 
     app.route('/output/:saida_id')
+        .all(app.config.passport.authenticate())
         .delete(app.services.outputService.deleteOutput)
 
     
