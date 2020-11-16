@@ -6,8 +6,7 @@ module.exports = app =>{
         
         app.db('input').insert(input).returning('entrada_id')
         .then(id => res.status(201).send(id))
-        .catch(erro => res.status(500).send('erro ao salvar'))
-        
+        .catch(erro => res.status(500).send('erro ao salvar'))        
     }
 
     const getInput = (req, res) =>{
@@ -23,6 +22,12 @@ module.exports = app =>{
         .catch(_ => res.status(500).send('erro ao deletar entrada'))
     }
 
+    const searchDateInput = (req, res) =>{
+        app.db('input').where('data_entrada', 'like', `%${req.query.date}%`)
+        .then(input => res.status(200).send(input))
+        .catch(erro => res.status(500).send('erro ao buscar entrada pela data'))
+    }
+
     
-    return {save, getInput, deleteInput}
+    return {save, getInput, deleteInput, searchDateInput}
 }
