@@ -14,7 +14,12 @@ module.exports = app =>{
             .select('saida_id','data_saida', 'produto_codigo', 'produto_nome', 'preco_custo', 'preco_venda', 'quantidade', 'total')
             .then(output => res.status(200).send(output))
             .catch(erro => res.status(500).send(erro))
+    }
 
+    const getDateOutput = (req, res)=>{
+        app.db('output').where('data_saida', 'like', `%${req.query.date}%`)
+        .then(output => res.status(200).send(output))
+        .catch(_ => res.status(500).send('erro ao buscar saida por data'))
     }
 
     const deleteOutput = (req, res) =>{
@@ -22,7 +27,5 @@ module.exports = app =>{
         .then(_ => res.status(200).send())
         .catch(_ => res.status(500).send('erro ao deletar saida'))
     }
-
-
-    return {save, getOutput, deleteOutput}
+    return {save, getOutput, deleteOutput, getDateOutput}
 }

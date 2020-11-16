@@ -25,7 +25,6 @@ module.exports = app =>{
         .orderBy('produto_id')
         .then(product => res.status(200).send(product))
         .catch(erro => res.status(500).send('erro ao buscar produto'))
-
     }
 
     const getByIdProduct = (req, res) =>{
@@ -42,5 +41,11 @@ module.exports = app =>{
         .catch(_ => res.status(500).send('erro ao deletar produto'))
     }
 
-    return {save, getProduct, getByIdProduct, deleteProduct}
+    const searchProduct = (req, res) =>{
+        app.db('product').where('nome_produto', 'like', `%${req.query.product}%`)
+        .then(user => res.status(200).send(user))
+        .catch(_ => res.status(500).send('erro'))
+    }
+
+    return {save, getProduct, getByIdProduct, deleteProduct, searchProduct}
 }

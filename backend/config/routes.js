@@ -28,6 +28,10 @@ module.exports = app =>{
         .post(app.services.productService.save)
         .get(app.services.productService.getProduct)
 
+    app.route('/products/search')
+        .get(app.services.productService.searchProduct)
+
+
     app.route('/products/:produto_id')
         .all(app.config.passport.authenticate())
         .get(app.services.productService.getByIdProduct)
@@ -41,6 +45,9 @@ module.exports = app =>{
         .get(app.services.inputService.getInput)
         .post(app.services.inputService.save)
 
+    app.route('/input/search')
+        .get(app.services.inputService.searchDateInput)
+
     app.route('/input/:entrada_id')
         .all(app.config.passport.authenticate())
         .delete(app.services.inputService.deleteInput)
@@ -52,9 +59,10 @@ module.exports = app =>{
         .get(app.services.outputService.getOutput)
         .post(app.services.outputService.save)
 
+    app.route('/output/search')
+        .get(app.services.outputService.getDateOutput)
+
     app.route('/output/:saida_id')
         .all(app.config.passport.authenticate())
         .delete(app.services.outputService.deleteOutput)
-
-    
 }
