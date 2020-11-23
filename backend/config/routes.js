@@ -65,4 +65,11 @@ module.exports = app =>{
     app.route('/output/:saida_id')
         .all(app.config.passport.authenticate())
         .delete(app.services.outputService.deleteOutput)
+    
+    // rotas de soma de entrada e saída
+    app.route('/sumTotalOutput')
+        .get(app.services.sumValueService.sumTotalOutput)
+
+    app.route('/sumTotalInput')
+        .get(app.services.sumValueService.sumTotalInput)
 }

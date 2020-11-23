@@ -28,6 +28,10 @@ module.exports = app =>{
         .catch(erro => res.status(500).send('erro ao buscar entrada pela data'))
     }
 
+    const page = (req, res) =>{
+        
+    }
+
     
     return {save, getInput, deleteInput, searchDateInput}
 }
