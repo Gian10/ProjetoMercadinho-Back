@@ -1,5 +1,7 @@
 module.exports = {
-    buscaProdutoCodigo: `
-    SELECT nome_produto FROM product WHERE produto_id = ?
-    `
+    somaSaida: `
+    SELECT SUM(total) AS totalSaida FROM output
+    `,
+    somaEntrada: 
+    `SELECT SUM(total) AS totalEntrada FROM input`
 }
