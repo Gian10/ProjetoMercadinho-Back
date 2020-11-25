@@ -42,11 +42,16 @@ module.exports = app =>{
 // rota de entrada de produtos
     app.route('/input')
         .all(app.config.passport.authenticate())
-        .get(app.services.inputService.getInput)
+        .get(app.services.inputService.page)
         .post(app.services.inputService.save)
 
     app.route('/input/search')
+        .all(app.config.passport.authenticate())
         .get(app.services.inputService.searchDateInput)
+
+    app.route('/input/count')
+        .all(app.config.passport.authenticate())
+        .get(app.services.inputService.countInput)
 
     app.route('/input/:entrada_id')
         .all(app.config.passport.authenticate())
@@ -60,6 +65,7 @@ module.exports = app =>{
         .post(app.services.outputService.save)
 
     app.route('/output/search')
+        .all(app.config.passport.authenticate())
         .get(app.services.outputService.getDateOutput)
 
     app.route('/output/:saida_id')
@@ -68,8 +74,10 @@ module.exports = app =>{
     
     // rotas de soma de entrada e saída
     app.route('/sumTotalOutput')
+        .all(app.config.passport.authenticate())
         .get(app.services.sumValueService.sumTotalOutput)
 
     app.route('/sumTotalInput')
+        .all(app.config.passport.authenticate())
         .get(app.services.sumValueService.sumTotalInput)
 }
