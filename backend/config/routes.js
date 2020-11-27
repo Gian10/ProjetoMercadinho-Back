@@ -7,6 +7,7 @@ module.exports = app =>{
 // validar token
     app.post('/validateToken', app.authentication.auth.validateToken)
 
+    
         
 // rotas de usuário
     app.route('/login/cadastroUser')
@@ -20,6 +21,7 @@ module.exports = app =>{
         .all(app.config.passport.authenticate())
         .put(app.services.userService.save)
         .get(app.services.userService.getById)
+
 
 
 // rotas de produtos
@@ -39,39 +41,45 @@ module.exports = app =>{
         .delete(app.services.productService.deleteProduct)
 
 
+
 // rota de entrada de produtos
     app.route('/input')
         .all(app.config.passport.authenticate())
-        .get(app.services.inputService.page)
-        .post(app.services.inputService.save)
+        .get(app.services.inputService.getInputProducts)
+        .post(app.services.inputService.saveInputProduct)
 
     app.route('/input/search')
         .all(app.config.passport.authenticate())
-        .get(app.services.inputService.searchDateInput)
+        .get(app.services.inputService.searchDateInputProducts)
 
     app.route('/input/count')
         .all(app.config.passport.authenticate())
-        .get(app.services.inputService.countInput)
+        .get(app.services.inputService.countInputProducts)
 
     app.route('/input/:entrada_id')
         .all(app.config.passport.authenticate())
-        .delete(app.services.inputService.deleteInput)
+        .delete(app.services.inputService.deleteInputProducts)
+
 
 
 // rota de saída de produtos
     app.route('/output')
         .all(app.config.passport.authenticate())
-        .get(app.services.outputService.getOutput)
-        .post(app.services.outputService.save)
+        .get(app.services.outputService.getOutputProducts)
+        .post(app.services.outputService.saveOutputProduct)
 
     app.route('/output/search')
         .all(app.config.passport.authenticate())
-        .get(app.services.outputService.getDateOutput)
+        .get(app.services.outputService.searchOutputProducts)
+
+    app.route('/output/count')
+        .get(app.services.outputService.countOutputProducts)
 
     app.route('/output/:saida_id')
         .all(app.config.passport.authenticate())
-        .delete(app.services.outputService.deleteOutput)
-    
+        .delete(app.services.outputService.deleteOutputProduct)
+ 
+        
     // rotas de soma de entrada e saída
     app.route('/sumTotalOutput')
         .all(app.config.passport.authenticate())
