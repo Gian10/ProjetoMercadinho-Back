@@ -27,8 +27,8 @@ module.exports = app =>{
 // rotas de produtos
     app.route('/products')
         .all(app.config.passport.authenticate())
-        .post(app.services.productService.save)
-        .get(app.services.productService.getProduct)
+        .post(app.services.productService.saveProduct)
+        .get(app.services.productService.getProducts)
 
     app.route('/products/search')
         .get(app.services.productService.searchProduct)
@@ -37,7 +37,7 @@ module.exports = app =>{
     app.route('/products/:produto_id')
         .all(app.config.passport.authenticate())
         .get(app.services.productService.getByIdProduct)
-        .put(app.services.productService.save)
+        .put(app.services.productService.saveProduct)
         .delete(app.services.productService.deleteProduct)
 
 

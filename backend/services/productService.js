@@ -1,7 +1,7 @@
 
 module.exports = app =>{
 
-    const save = (req, res) =>{
+    const saveProduct = (req, res) =>{
         const product = { ...req.body}
 
         if(req.params.produto_id){
@@ -19,13 +19,21 @@ module.exports = app =>{
         }
     }
 
-    const getProduct = (req, res) =>{
-        app.db('product')
+    const getProducts = async (req, res) =>{
+        const products = await app.db('product')
         .select('produto_id', 'nome_produto', 'codigo_produto', 'preco_custo', 'preco_venda', 'estoque')
-        .orderBy('produto_id')
-        .then(product => res.status(200).send(product))
-        .catch(erro => res.status(500).send('erro ao buscar produto'))
+        .orderBy('produto_id').limit(10).offset((req.query.page - 1) * 10)
+
+        const countProduct = await app.db('product').count()
+
+        const productLength = {
+            'countProducts' : countProduct[0].count,
+            'products' : products
+        } 
+        res.send(productLength)
     }
+
+    
 
     const getByIdProduct = (req, res) =>{
         app.db('product')
@@ -47,5 +55,5 @@ module.exports = app =>{
         .catch(_ => res.status(500).send('erro'))
     }
 
-    return {save, getProduct, getByIdProduct, deleteProduct, searchProduct}
+    return {saveProduct, getProducts, getByIdProduct, deleteProduct, searchProduct}
 }
