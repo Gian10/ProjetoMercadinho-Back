@@ -6,7 +6,7 @@ module.exports = app =>{
         return bcrypt.hashSync(passward, salt)
     }
 
-    const save = (req, res) =>{
+    const saveUser = (req, res) =>{
         const user = { ...req.body}
 
         if(req.params.id){
@@ -18,12 +18,12 @@ module.exports = app =>{
         if(user.id){
            app.db('users').update(user).where({id: user.id})
             .then(_ => res.status(201).send())
-            .catch(erro => res.status(500).send('erro ao atualizar'))
+            .catch(erro => res.status(500).send('ERRO AO ATUALIZAR DADOS DE USUÁRIO'))
 
         }else{
             app.db('users').insert(user)
             .then(_ => res.status(201).send())
-            .catch(erro => res.status(500).send('erro ao salvar'))
+            .catch(erro => res.status(500).send('ERRO AO SALVAR USUÁRIO'))
         }
         
     }
@@ -31,15 +31,15 @@ module.exports = app =>{
     const getUsers = (req, res) =>{
         app.db('users').select('id', 'nome', 'senha').orderBy('id')
         .then(users => res.status(200).send(users))
-        .catch(erro => res.status(500).send('erro ao buscar usuarios'))
+        .catch(erro => res.status(500).send('ERRO AO BUSCAR USUÁRIO'))
 
     }
 
-    const getById = (req, res) =>{
+    const getByIdUser = (req, res) =>{
         app.db('users').select('id', 'nome', 'senha').where({id: req.params.id})
         .then(user => res.status(200).send(user))
-        .catch(erro => res.status(500).send("Erro ao pesquisar usuário"))
+        .catch(erro => res.status(500).send('ERRO AO BUSCAR USUÁRIO'))
     }  
 
-    return {save, getById, getUsers}
+    return {saveUser, getByIdUser, getUsers}
 }

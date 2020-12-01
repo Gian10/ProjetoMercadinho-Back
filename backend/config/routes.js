@@ -11,7 +11,7 @@ module.exports = app =>{
         
 // rotas de usuário
     app.route('/login/cadastroUser')
-        .post(app.services.userService.save)
+        .post(app.services.userService.saveUser)
 
     app.route('/users')
         .all(app.config.passport.authenticate())
@@ -19,8 +19,8 @@ module.exports = app =>{
 
     app.route('/users/:id')
         .all(app.config.passport.authenticate())
-        .put(app.services.userService.save)
-        .get(app.services.userService.getById)
+        .put(app.services.userService.saveUser)
+        .get(app.services.userService.getByIdUser)
 
 
 
