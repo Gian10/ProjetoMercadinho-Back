@@ -12,6 +12,7 @@ module.exports = app =>{
 
     const getInputProducts = (req, res) =>{
         app.db('input_product').select('entrada_id','data_entrada', 'codigo_produto', 'nome_produto', 'preco_custo', 'preco_venda', 'quantidade', 'total')
+        .where({usuario_id : req.query.usuario_id})
         .limit(10).offset((req.query.page - 1) * 10)
         .then(input => res.status(200).send(input))
         .catch(_ => res.status(500).send('ERRO AO BUSCAR DADOS DE ENTRADA DE PRODUTO'))
@@ -25,9 +26,11 @@ module.exports = app =>{
 
     const searchDateInputProducts = async (req, res) =>{
         const countSearch = await app.db('input_product').count().where('data_entrada', 'like', `%${req.query.date}%`)
+        .where({usuario_id : req.query.usuario_id})
         .catch(_ => res.status(500).send('ERRO AO RETORNA A QUANTIDADE DE ENTRADA POR PESQUISA')) 
 
         const searchInput = await app.db('input_product').where('data_entrada', 'like', `%${req.query.date}%`).limit(10).offset((req.query.page - 1) * 10)
+        .where({usuario_id : req.query.usuario_id})
         .catch(_ => res.status(500).send('ERRO AO BUSCAR ENTRADA PRO DATA'))
         
         const data = {
@@ -38,7 +41,7 @@ module.exports = app =>{
     }
 
     const countInputProducts = async (req, res) =>{
-        await app.db.raw(query.entradaQtd)
+        await app.db.raw(query.entradaQtd, req.query.usuario_id)
         .then(count => res.status(200).send(count.rows[0]))
         .catch(_ => res.status(500).send('ERRO AO BUSCAR DADOS DE ENTRADA DE PRODUTO'))
     }
