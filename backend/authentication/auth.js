@@ -9,12 +9,12 @@ module.exports = app =>{
         const user = await app.db('users').select('id','nome', 'senha').where({nome: req.body.nome}).first()
         
         if(!user){
-            return res.status(500).send('Nome Inválido')
+            return res.status(500).send('NOME INVÁLIDO')
         }
         const isEqual = bcrypt.compareSync(req.body.senha, user.senha)
         
         if(!isEqual){
-            return res.status(401).send('Senha Inválida')
+            return res.status(401).send('SENHA INVÁLIDA')
         }
         
         const dateNowSeconds = Math.floor(Date.now() /  1000)
