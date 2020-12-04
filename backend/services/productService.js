@@ -9,23 +9,23 @@ module.exports = app =>{
         }
 
         if(product.produto_id){
-            app.db('product').update(product).where({produto_id: product.produto_id})
+            app.db('products').update(product).where({produto_id: product.produto_id})
             .then(_ => res.status(201).send())
             .catch(erro => res.status(500).send('ERRO AO ATUALIZAR PRODUTO'))
         }else{
-            app.db('product').insert(product)
+            app.db('products').insert(product)
             .then(product => res.status(201).send())
             .catch(erro => res.status(500).send('ERRO AO SALVAR PRODUTO'))
         }
     }
 
     const getProducts = async (req, res) =>{
-        const products = await app.db('product')
+        const products = await app.db('products')
         .select('produto_id', 'nome_produto', 'codigo_produto', 'preco_custo', 'preco_venda', 'estoque')
         .orderBy('produto_id').limit(10).offset((req.query.page - 1) * 10)
         .catch(_ => res.status(500).send('ERRO AO BUSCAR PRODUTOS'))
 
-        const countProduct = await app.db('product').count()
+        const countProduct = await app.db('products').count()
 
         const productLength = {
             'countProducts' : countProduct[0].count,
@@ -35,7 +35,7 @@ module.exports = app =>{
     } 
 
     const getByIdProduct = (req, res) =>{
-        app.db('product')
+        app.db('products')
         .select('produto_id', 'nome_produto', 'codigo_produto', 'preco_custo', 'preco_venda', 'estoque')
         .where({produto_id: req.params.produto_id})  
         .then(product => res.status(200).send(product))
@@ -43,17 +43,17 @@ module.exports = app =>{
     }
 
     const deleteProduct = async (req, res) =>{
-        app.db('product').delete().where({produto_id: req.params.produto_id})
+        app.db('products').delete().where({produto_id: req.params.produto_id})
         .then(_ => res.status(200).send())
         .catch(_ => res.status(500).send('ERRO AO DELETAR PRODUTO PELO ID'))
     }
 
     const searchProduct = async (req, res) =>{
-        const productSearch = await app.db('product').where('nome_produto', 'like', `%${req.query.product}%`)
+        const productSearch = await app.db('products').where('nome_produto', 'like', `%${req.query.product}%`)
         .limit(10).offset((req.query.page - 1) * 10)
         .catch(_ => res.status(500).send('ERRO AO BUSCAR PESQUISA DE PRODUTO'))
 
-        const countSearchProduct = await app.db('product').count().where('nome_produto', 'like', `%${req.query.product}%`)
+        const countSearchProduct = await app.db('products').count().where('nome_produto', 'like', `%${req.query.product}%`)
         .catch(_ => res.status(500).send('ERRO AO BUSCAR O TAMANHO DA PESQUISA'))
 
         const searchProductCount = {
