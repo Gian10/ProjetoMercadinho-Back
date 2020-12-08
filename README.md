@@ -1,6 +1,6 @@
 # App BackEnd
 
-Projeto de Mercadinho com a funcionalidade de entrada e saída de produto
+Projeto de Mercadinho com as funcionalidades de cadastro de usuário, login, cadastro de produto e entrada e saída de produto
 
 # Tecnologias
 * **FrameWork-Back** : NodeJs-Express
