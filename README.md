@@ -15,4 +15,7 @@ Projeto de Mercadinho com a funcionalidade de entrada e saída de produto
 * Saída de Produto.
 
 
+# Teste de Unidade
+* Jasmine.js
+
 ********
