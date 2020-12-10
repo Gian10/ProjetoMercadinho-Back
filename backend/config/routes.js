@@ -7,12 +7,15 @@ module.exports = app =>{
 // validar token
     app.post('/validateToken', app.authentication.auth.validateToken)
 
-    
         
 // rotas de usuário
     app.route('/users')
         .all(app.config.passport.authenticate())
         .get(app.services.userService.getUsers)
+        .post(app.services.userService.saveUser)
+
+// rota de cadastro de usuário
+    app.route('/users/cadastro')
         .post(app.services.userService.saveUser)
 
     app.route('/users/:id')

@@ -1,6 +1,4 @@
-
-// TEST UNIT USING JASMINE IN API REST FOR KNOW RETUNING STATUS CODE HTTP
-const request = require('request');
+const request = require('request')
 
 const endpoint = 'http://localhost:3000';
 
@@ -13,26 +11,28 @@ describe('login', function () {
             token = response.body.token
             expect(response.statusCode).toEqual(200);
             done();
-            console.log(" - LOGIN FOR USER")
+            console.log(" - LOGIN FOR PRODUCTS")
         })
     })
 });
 
-describe('users', ()=>{
+describe('products', ()=>{
     it('deve retornar 200 código de resposta', function (done) {
-        request.get(`${endpoint}/users`, {headers: {Authorization :`Bearer ${token}`}}, function (error, response) {
+        request.get(`${endpoint}/products?usuario_id=1`, {headers: {Authorization :`Bearer ${token}`}}, function (error, response) {
             expect(response.statusCode).toEqual(200);
             done();
-            console.log(" - GET USERS WITH TOKEN")
+            console.log(" - GET PRODUCTS WITH TOKEN")
         });
     });
 
     it('deve retorna 200 código da resposta', (done)=>{
-        request.post(`${endpoint}/users/cadastro`, 
-        {json: true, body: {'nome': 'SOUSA', 'senha': '123456'}},(error, response)=>{
+        request.post(`${endpoint}/products`, 
+        {json: true, body: {'nome_produto': 'GUARANA', 'codigo_produto': '123456', 'preco_custo' : 10,
+        'preco_venda' : 10, 'estoque' : 20, 'usuario_id' : 1}, 
+        headers: {Authorization: `Bearer ${token}`}}, (error, response)=>{
             expect(response.statusCode).toEqual(201);
             done();
-            console.log(" - POST USERS")
+            console.log(" - POST PRODUCTS WITH TOKEN")
         })
     })
 })
