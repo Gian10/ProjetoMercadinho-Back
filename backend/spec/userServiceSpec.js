@@ -12,7 +12,7 @@ describe('login', function () {
         headers: '',}, function (error, response) {
             token = response.body.token
             expect(response.statusCode).toEqual(200);
-            done();
+            done();            
             console.log(" - LOGIN FOR USER")
         })
     })
@@ -27,8 +27,8 @@ describe('users', ()=>{
         });
     });
 
-    it('deve retorna 200 código da resposta', (done)=>{
-        request.post(`${endpoint}/users/cadastro`, 
+    it('deve retorna 201 código da resposta', (done)=>{
+        request.post(`${endpoint}/users/create`, 
         {json: true, body: {'nome': 'SOUSA', 'senha': '123456'}},(error, response)=>{
             expect(response.statusCode).toEqual(201);
             done();
