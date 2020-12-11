@@ -15,7 +15,7 @@ module.exports = app =>{
         .post(app.services.userService.saveUser)
 
 // rota de cadastro de usuário
-    app.route('/users/cadastro')
+    app.route('/users/create')
         .post(app.services.userService.saveUser)
 
     app.route('/users/:id')
