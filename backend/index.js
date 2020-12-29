@@ -15,6 +15,6 @@ consign()
     .into(app)
 
 
-app.listen(3000, ()=>{
-    console.log("Executando")
+app.listen(process.env.PORT | 8080 , ()=>{
+    console.log("Executando, port: " + process.env.PORT | 8080);
 })
