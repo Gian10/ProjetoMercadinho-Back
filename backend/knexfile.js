@@ -3,9 +3,11 @@
 module.exports = {
     client: 'postgresql',
     connection: {
+      host: 'mercadinho-araujo.c1itw3qweo6h.us-east-2.rds.amazonaws.com',
+      port: '5432',
       database: 'mercadinho_araujo',
       user:     'postgres',
-      password: '123456'
+      password: 'espanha1994'
     },
     pool: {
       min: 2,
